@@ -33,6 +33,16 @@ with open("examples/api_workflows/birefnet_api.json", "r") as file:
 
 class Predictor(BasePredictor):
     def setup(self, weights: str):
+        # 1️⃣  instala nodos extra para poder generar imagenes con ilustraciones ──────────────
+        import subprocess, sys
+        pkgs = [
+            "git+https://github.com/cubiq/ComfyUI_InstantID.git",
+            "git+https://github.com/ltdrdata/ComfyUI-Advanced-ControlNet.git",
+            "git+https://github.com/Acly/ComfyUI-Inpaint-Model.git"
+        ]
+        for p in pkgs:
+            subprocess.run([sys.executable, "-m", "pip", "install", "--no-cache-dir", p], check=True)
+        # ───────────────────────────────────────
         if bool(weights):
             self.handle_user_weights(weights)
 
